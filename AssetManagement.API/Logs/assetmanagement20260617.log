@@ -1,0 +1,123 @@
+2026-06-17 09:47:43.342 +05:30 [INF] Executed DbCommand (48ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-06-17 09:47:43.464 +05:30 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2026-06-17 09:47:43.582 +05:30 [INF] Executed DbCommand (108ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2026-06-17 09:47:43.826 +05:30 [INF] Executed DbCommand (28ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2026-06-17 09:47:43.842 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-06-17 09:47:43.844 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-06-17 09:47:43.901 +05:30 [INF] Executed DbCommand (53ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2026-06-17 09:47:43.919 +05:30 [INF] Applying migration '20260617041705_AddedNewTables'.
+2026-06-17 09:47:44.213 +05:30 [INF] Executed DbCommand (113ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Users] ADD [DepartmentId] int NULL;
+2026-06-17 09:47:44.266 +05:30 [INF] Executed DbCommand (52ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AssetImages] (
+    [ImageId] int NOT NULL IDENTITY,
+    [ImageUrl] nvarchar(max) NOT NULL,
+    [Description] nvarchar(max) NOT NULL,
+    [UploadedAt] datetime2 NOT NULL,
+    [AssetId] int NOT NULL,
+    CONSTRAINT [PK_AssetImages] PRIMARY KEY ([ImageId]),
+    CONSTRAINT [FK_AssetImages_Assets_AssetId] FOREIGN KEY ([AssetId]) REFERENCES [Assets] ([AssetId]) ON DELETE CASCADE
+);
+2026-06-17 09:47:44.273 +05:30 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AssetMaintenanceLogs] (
+    [MaintenanceId] int NOT NULL IDENTITY,
+    [MaintenanceType] nvarchar(max) NOT NULL,
+    [Description] nvarchar(max) NOT NULL,
+    [MaintenanceDate] datetime2 NOT NULL,
+    [Status] nvarchar(max) NOT NULL,
+    [MaintenanceCost] decimal(18,2) NOT NULL,
+    [AssetId] int NOT NULL,
+    CONSTRAINT [PK_AssetMaintenanceLogs] PRIMARY KEY ([MaintenanceId]),
+    CONSTRAINT [FK_AssetMaintenanceLogs_Assets_AssetId] FOREIGN KEY ([AssetId]) REFERENCES [Assets] ([AssetId]) ON DELETE CASCADE
+);
+2026-06-17 09:47:44.283 +05:30 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AssetReturnRequests] (
+    [ReturnRequestId] int NOT NULL IDENTITY,
+    [Reason] nvarchar(max) NOT NULL,
+    [Status] nvarchar(max) NOT NULL,
+    [RequestedAt] datetime2 NOT NULL,
+    [ApprovedAt] datetime2 NULL,
+    [AssetId] int NOT NULL,
+    [UserId] int NOT NULL,
+    CONSTRAINT [PK_AssetReturnRequests] PRIMARY KEY ([ReturnRequestId]),
+    CONSTRAINT [FK_AssetReturnRequests_Assets_AssetId] FOREIGN KEY ([AssetId]) REFERENCES [Assets] ([AssetId]) ON DELETE CASCADE,
+    CONSTRAINT [FK_AssetReturnRequests_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([UserId]) ON DELETE CASCADE
+);
+2026-06-17 09:47:44.296 +05:30 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AuditLogs] (
+    [AuditLogId] int NOT NULL IDENTITY,
+    [Action] nvarchar(max) NOT NULL,
+    [EntityName] nvarchar(max) NOT NULL,
+    [Details] nvarchar(max) NOT NULL,
+    [PerformedAt] datetime2 NOT NULL,
+    [UserId] int NOT NULL,
+    CONSTRAINT [PK_AuditLogs] PRIMARY KEY ([AuditLogId]),
+    CONSTRAINT [FK_AuditLogs_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([UserId]) ON DELETE CASCADE
+);
+2026-06-17 09:47:44.329 +05:30 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Departments] (
+    [DepartmentId] int NOT NULL IDENTITY,
+    [DepartmentName] nvarchar(max) NOT NULL,
+    [Location] nvarchar(max) NOT NULL,
+    CONSTRAINT [PK_Departments] PRIMARY KEY ([DepartmentId])
+);
+2026-06-17 09:47:44.349 +05:30 [INF] Executed DbCommand (19ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Notifications] (
+    [NotificationId] int NOT NULL IDENTITY,
+    [Title] nvarchar(max) NOT NULL,
+    [Message] nvarchar(max) NOT NULL,
+    [IsRead] bit NOT NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UserId] int NOT NULL,
+    CONSTRAINT [PK_Notifications] PRIMARY KEY ([NotificationId]),
+    CONSTRAINT [FK_Notifications_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([UserId]) ON DELETE CASCADE
+);
+2026-06-17 09:47:44.532 +05:30 [INF] Executed DbCommand (142ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'DepartmentId', N'DepartmentName', N'Location') AND [object_id] = OBJECT_ID(N'[Departments]'))
+    SET IDENTITY_INSERT [Departments] ON;
+INSERT INTO [Departments] ([DepartmentId], [DepartmentName], [Location])
+VALUES (1, N'IT', N'Chennai'),
+(2, N'HR', N'Mumbai'),
+(3, N'Finance', N'Bangalore');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'DepartmentId', N'DepartmentName', N'Location') AND [object_id] = OBJECT_ID(N'[Departments]'))
+    SET IDENTITY_INSERT [Departments] OFF;
+2026-06-17 09:47:44.628 +05:30 [INF] Executed DbCommand (96ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Users_DepartmentId] ON [Users] ([DepartmentId]);
+2026-06-17 09:47:44.633 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_AssetImages_AssetId] ON [AssetImages] ([AssetId]);
+2026-06-17 09:47:44.637 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_AssetMaintenanceLogs_AssetId] ON [AssetMaintenanceLogs] ([AssetId]);
+2026-06-17 09:47:44.642 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_AssetReturnRequests_AssetId] ON [AssetReturnRequests] ([AssetId]);
+2026-06-17 09:47:44.646 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_AssetReturnRequests_UserId] ON [AssetReturnRequests] ([UserId]);
+2026-06-17 09:47:44.650 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_AuditLogs_UserId] ON [AuditLogs] ([UserId]);
+2026-06-17 09:47:44.659 +05:30 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Notifications_UserId] ON [Notifications] ([UserId]);
+2026-06-17 09:47:44.706 +05:30 [INF] Executed DbCommand (47ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Users] ADD CONSTRAINT [FK_Users_Departments_DepartmentId] FOREIGN KEY ([DepartmentId]) REFERENCES [Departments] ([DepartmentId]);
+2026-06-17 09:47:44.714 +05:30 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20260617041705_AddedNewTables', N'10.0.0');
+2026-06-17 09:47:44.726 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
