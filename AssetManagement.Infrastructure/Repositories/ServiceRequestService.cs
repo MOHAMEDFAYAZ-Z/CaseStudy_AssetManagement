@@ -1,4 +1,5 @@
 ﻿using AssetManagement.Core.DTOs;
+using AssetManagement.Core.Exceptions;
 using AssetManagement.Core.Interfaces;
 using AssetManagement.Core.Models;
 using AssetManagement.Infrastructure.Data;
@@ -23,7 +24,7 @@ namespace AssetManagement.Infrastructure.Repositories
                     .FirstOrDefaultAsync(a => a.AssetNo == dto.AssetNo);
 
                 if (asset == null)
-                    throw new Exception("Asset not found.");
+                    throw new NotFoundException("Asset not found.");
 
                 var serviceRequest = new ServiceRequest
                 {
@@ -109,7 +110,7 @@ namespace AssetManagement.Infrastructure.Repositories
                     .FirstOrDefaultAsync(s => s.ServiceId == id);
 
                 if (serviceRequest == null)
-                    throw new Exception("Service request not found.");
+                    throw new NotFoundException("Service request not found.");
 
                 serviceRequest.Status = status;
 
@@ -136,7 +137,7 @@ namespace AssetManagement.Infrastructure.Repositories
                     .FirstOrDefaultAsync(s => s.ServiceId == id);
 
                 if (serviceRequest == null)
-                    throw new Exception("Service request not found.");
+                    throw new NotFoundException("Service request not found.");
 
                 return new ServiceRequestResponseDTO
                 {

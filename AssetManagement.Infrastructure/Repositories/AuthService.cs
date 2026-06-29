@@ -1,4 +1,5 @@
 ﻿using AssetManagement.Core.DTOs;
+using AssetManagement.Core.Exceptions;
 using AssetManagement.Core.Interfaces;
 using AssetManagement.Core.Models;
 using AssetManagement.Infrastructure.Data;
@@ -23,7 +24,8 @@ namespace AssetManagement.Infrastructure.Repositories
                     .FirstOrDefaultAsync(u => u.Email == registerDTO.Email);
 
                 if (existingUser != null)
-                    throw new Exception("Email already registered.");
+                    throw new DuplicateException("Email already registered.");
+
 
                 var user = new User
                 {
@@ -62,7 +64,7 @@ namespace AssetManagement.Infrastructure.Repositories
                     .FirstOrDefaultAsync(u => u.Email == loginDTO.Email);
 
                 if (user == null)
-                    throw new Exception("Invalid email or password.");
+                    throw new BadRequestException("Invalid email or password.");
 
                 bool isPasswordValid = BCrypt.Net.BCrypt.Verify(loginDTO.Password, user.PasswordHash);
 

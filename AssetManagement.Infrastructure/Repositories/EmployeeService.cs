@@ -1,4 +1,5 @@
 ﻿using AssetManagement.Core.DTOs;
+using AssetManagement.Core.Exceptions;
 using AssetManagement.Core.Interfaces;
 using AssetManagement.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -49,7 +50,7 @@ namespace AssetManagement.Infrastructure.Repositories
                     .FirstOrDefaultAsync(u => u.UserId == id && u.Role == "Employee");
 
                 if (user == null)
-                    throw new Exception("Employee not found.");
+                    throw new NotFoundException("Employee not found.");
 
                 return new EmployeeResponseDTO
                 {
@@ -78,7 +79,7 @@ namespace AssetManagement.Infrastructure.Repositories
                     .FirstOrDefaultAsync(u => u.UserId == id && u.Role == "Employee");
 
                 if (user == null)
-                    throw new Exception("Employee not found.");
+                    throw new NotFoundException("Employee not found.");
 
                 user.Name = updateEmployeeDTO.Name;
                 user.Gender = updateEmployeeDTO.Gender;
@@ -104,7 +105,7 @@ namespace AssetManagement.Infrastructure.Repositories
                     .FirstOrDefaultAsync(u => u.UserId == id && u.Role == "Employee");
 
                 if (user == null)
-                    throw new Exception("Employee not found.");
+                    throw new NotFoundException("Employee not found.");
 
                 _context.Users.Remove(user);
                 await _context.SaveChangesAsync();

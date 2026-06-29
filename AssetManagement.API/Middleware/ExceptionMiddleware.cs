@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using AssetManagement.Core.Exceptions;
+using System.Net;
 using System.Text.Json;
 
 namespace AssetManagement.API.Middleware
@@ -31,9 +32,13 @@ namespace AssetManagement.API.Middleware
         {
             context.Response.ContentType = "application/json";
 
-            var statusCode = ex.Message.Contains("not found") ?
-                (int)HttpStatusCode.NotFound :
-                (int)HttpStatusCode.InternalServerError;
+            var statusCode = ex switch
+            {
+                NotFoundException => (int)HttpStatusCode.NotFound,
+                DuplicateException => (int)HttpStatusCode.Conflict,
+                BadRequestException => (int)HttpStatusCode.BadRequest,
+                _ => (int)HttpStatusCode.InternalServerError
+            };
 
             context.Response.StatusCode = statusCode;
 
@@ -49,7 +54,8 @@ namespace AssetManagement.API.Middleware
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             };
 
-            return context.Response.WriteAsync(JsonSerializer.Serialize(response, options));
+            return context.Response.WriteAsync(
+                JsonSerializer.Serialize(response, options));
         }
     }
 }

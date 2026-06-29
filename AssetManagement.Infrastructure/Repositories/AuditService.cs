@@ -1,4 +1,5 @@
 ﻿using AssetManagement.Core.DTOs;
+using AssetManagement.Core.Exceptions;
 using AssetManagement.Core.Interfaces;
 using AssetManagement.Core.Models;
 using AssetManagement.Infrastructure.Data;
@@ -112,7 +113,7 @@ namespace AssetManagement.Infrastructure.Repositories
                     .FirstOrDefaultAsync(a => a.AuditId == auditId);
 
                 if (audit == null)
-                    throw new Exception("Audit request not found.");
+                    throw new NotFoundException("Audit request not found.");
 
                 audit.Status = status;
                 audit.RespondedAt = DateTime.Now;

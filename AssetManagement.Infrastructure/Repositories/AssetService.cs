@@ -1,4 +1,5 @@
 ﻿using AssetManagement.Core.DTOs;
+using AssetManagement.Core.Exceptions;
 using AssetManagement.Core.Interfaces;
 using AssetManagement.Core.Models;
 using AssetManagement.Infrastructure.Data;
@@ -78,7 +79,7 @@ namespace AssetManagement.Infrastructure.Repositories
                     .FirstOrDefaultAsync(a => a.AssetNo == createAssetDTO.AssetNo);
 
                 if (existingAsset != null)
-                    throw new Exception("Asset number already exists.");
+                    throw new DuplicateException("Asset number already exists.");
 
                 var asset = new Asset
                 {
@@ -110,7 +111,7 @@ namespace AssetManagement.Infrastructure.Repositories
                 var asset = await _context.Assets.FindAsync(id);
 
                 if (asset == null)
-                    throw new Exception("Asset not found.");
+                    throw new NotFoundException("Asset not found.");
 
                 asset.AssetName = updateAssetDTO.AssetName;
                 asset.AssetModel = updateAssetDTO.AssetModel;
@@ -137,7 +138,7 @@ namespace AssetManagement.Infrastructure.Repositories
                 var asset = await _context.Assets.FindAsync(id);
 
                 if (asset == null)
-                    throw new Exception("Asset not found.");
+                    throw new NotFoundException("Asset not found.");
 
                 _context.Assets.Remove(asset);
                 await _context.SaveChangesAsync();

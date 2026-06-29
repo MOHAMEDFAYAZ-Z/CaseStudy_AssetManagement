@@ -165,7 +165,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
-//test git
+
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();

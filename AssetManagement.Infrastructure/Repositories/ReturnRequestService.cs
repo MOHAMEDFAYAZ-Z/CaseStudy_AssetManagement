@@ -1,4 +1,5 @@
 ﻿using AssetManagement.Core.DTOs;
+using AssetManagement.Core.Exceptions;
 using AssetManagement.Core.Interfaces;
 using AssetManagement.Core.Models;
 using AssetManagement.Infrastructure.Data;
@@ -23,7 +24,7 @@ namespace AssetManagement.Infrastructure.Repositories
                     .FirstOrDefaultAsync(a => a.AssetId == dto.AssetId);
 
                 if (asset == null)
-                    throw new Exception("Asset not found.");
+                    throw new NotFoundException("Asset not found.");
 
                 var allocation = await _context.AssetAllocations
                     .FirstOrDefaultAsync(a => a.AssetId == dto.AssetId
@@ -31,7 +32,7 @@ namespace AssetManagement.Infrastructure.Repositories
                         && a.Status == "Active");
 
                 if (allocation == null)
-                    throw new Exception("No active allocation found for this asset.");
+                    throw new BadRequestException("No active allocation found for this asset.");
 
                 var returnRequest = new AssetReturnRequest
                 {
@@ -114,7 +115,7 @@ namespace AssetManagement.Infrastructure.Repositories
                     .FirstOrDefaultAsync(r => r.ReturnRequestId == id);
 
                 if (returnRequest == null)
-                    throw new Exception("Return request not found.");
+                    throw new NotFoundException("Return request not found.");
 
                 returnRequest.Status = status;
 
@@ -154,7 +155,7 @@ namespace AssetManagement.Infrastructure.Repositories
                     .FirstOrDefaultAsync(r => r.ReturnRequestId == id);
 
                 if (returnRequest == null)
-                    throw new Exception("Return request not found.");
+                    throw new NotFoundException("Return request not found.");
 
                 return new ReturnRequestResponseDTO
                 {

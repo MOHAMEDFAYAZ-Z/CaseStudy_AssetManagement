@@ -1,4 +1,5 @@
 ﻿using AssetManagement.Core.DTOs;
+using AssetManagement.Core.Exceptions;
 using AssetManagement.Core.Interfaces;
 using AssetManagement.Core.Models;
 using AssetManagement.Infrastructure.Data;
@@ -23,10 +24,10 @@ namespace AssetManagement.Infrastructure.Repositories
                     .FirstOrDefaultAsync(a => a.AssetId == createAllocationDTO.AssetId);
 
                 if (asset == null)
-                    throw new Exception("Asset not found.");
+                    throw new NotFoundException("Asset not found.");
 
                 if (asset.Status != "Available")
-                    throw new Exception("Asset is not available for allocation.");
+                    throw new BadRequestException("Asset is not available for allocation.");
 
                 var allocation = new AssetAllocation
                 {
@@ -109,7 +110,7 @@ namespace AssetManagement.Infrastructure.Repositories
                     .FirstOrDefaultAsync(a => a.AllocationId == id);
 
                 if (allocation == null)
-                    throw new Exception("Allocation not found.");
+                    throw new NotFoundException("Asset not found.");
 
                 allocation.Status = status;
 
@@ -139,7 +140,7 @@ namespace AssetManagement.Infrastructure.Repositories
                     .FirstOrDefaultAsync(a => a.AllocationId == id);
 
                 if (allocation == null)
-                    throw new Exception("Allocation not found.");
+                    throw new NotFoundException("Allocation not found.");
 
                 return new AllocationResponseDTO
                 {
