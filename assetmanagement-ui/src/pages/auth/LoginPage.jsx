@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { loginUser } from "../../api/authApi";
 import { useAuth } from "../../context/AuthContext";
 import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
-import { MdInventory } from "react-icons/md";
+import { MdInventory, MdAssignment, MdBuild } from "react-icons/md";
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -39,18 +39,36 @@ export default function LoginPage() {
 
   return (
     <div className="auth-wrapper">
+
       {/* Left Side */}
-      <div className="auth-left">
-        <MdInventory size={64} style={{ marginBottom: "24px", opacity: 0.9 }} />
-        <h1>Asset Management</h1>
-        <p>
-          A unified platform to track, manage and monitor all company assets
-          efficiently and accurately.
-        </p>
-        <div style={{ marginTop: "48px", opacity: 0.8 }}>
-          <p style={{ fontSize: "0.9rem" }}>Powered by Hexaware Technologies</p>
-        </div>
-      </div>
+<div className="auth-left">
+  <div style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
+    <MdInventory size={72} style={{ marginBottom: "24px", opacity: 0.95 }} />
+    <h1>Asset Management</h1>
+    <p>
+      A unified platform to track, manage and monitor all company assets efficiently.
+    </p>
+  </div>
+
+  <div className="auth-features">
+    <div className="auth-feature-item">
+      <MdInventory size={20} />
+      <span>Track all company assets in one place</span>
+    </div>
+    <div className="auth-feature-item">
+      <MdAssignment size={20} />
+      <span>Request and manage asset allocations</span>
+    </div>
+    <div className="auth-feature-item">
+      <MdBuild size={20} />
+      <span>Raise and track service requests</span>
+    </div>
+  </div>
+
+  <div style={{ marginTop: "48px", opacity: 0.7, position: "relative", zIndex: 1 }}>
+    <p style={{ fontSize: "0.85rem" }}>© 2026 Hexaware Technologies</p>
+  </div>
+</div>
 
       {/* Right Side */}
       <div className="auth-right">

@@ -2,20 +2,8 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import LoginPage from "../pages/auth/LoginPage";
 import RegisterPage from "../pages/auth/RegisterPage";
-
-function ProtectedRoute({ children, allowedRole }) {
-  const { token, role } = useAuth();
-
-  if (!token) {
-    return <Navigate to="/login" />;
-  }
-
-  if (allowedRole && role !== allowedRole) {
-    return <Navigate to="/unauthorized" />;
-  }
-
-  return children;
-}
+import EmployeeDashboard from "../pages/employee/EmployeeDashboard";
+import ProtectedRoute from "../components/common/ProtectedRoute";
 
 export default function AppRoutes() {
   const { role, token } = useAuth();
@@ -25,6 +13,16 @@ export default function AppRoutes() {
       {/* Public routes */}
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
+
+      {/* Employee routes */}
+      <Route
+        path="/employee/dashboard"
+        element={
+          <ProtectedRoute allowedRole="Employee">
+            <EmployeeDashboard />
+          </ProtectedRoute>
+        }
+      />
 
       {/* Default redirect */}
       <Route
@@ -41,7 +39,20 @@ export default function AppRoutes() {
       />
 
       {/* Unauthorized */}
-      <Route path="/unauthorized" element={<h1>Access Denied</h1>} />
+      <Route
+        path="/unauthorized"
+        element={
+          <div className="d-flex justify-content-center align-items-center vh-100">
+            <div className="text-center">
+              <h2 className="text-danger">Access Denied</h2>
+              <p className="text-muted">You don't have permission to access this page.</p>
+              <button className="btn btn-primary" onClick={() => window.history.back()}>
+                Go Back
+              </button>
+            </div>
+          </div>
+        }
+      />
     </Routes>
   );
 }
