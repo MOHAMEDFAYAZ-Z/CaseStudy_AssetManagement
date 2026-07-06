@@ -8,6 +8,14 @@ import ServiceRequestPage from "../pages/employee/ServiceRequestPage";
 import AuditPage from "../pages/employee/AuditPage";
 import ReturnRequestPage from "../pages/employee/ReturnRequestPage";
 import RequestAssetPage from "../pages/employee/RequestAssetPage";
+import AdminDashboard from "../pages/admin/AdminDashboard";
+import AssetManagementPage from "../pages/admin/AssetManagementPage";
+import CategoryManagementPage from "../pages/admin/CategoryManagementPage";
+import EmployeeManagementPage from "../pages/admin/EmployeeManagementPage";
+import AllocationManagementPage from "../pages/admin/AllocationManagementPage";
+import ServiceRequestManagementPage from "../pages/admin/ServiceRequestManagementPage";
+import AuditManagementPage from "../pages/admin/AuditManagementPage";
+import ReturnRequestManagementPage from "../pages/admin/ReturnRequestManagementPage";
 import ProtectedRoute from "../components/common/ProtectedRoute";
 
 export default function AppRoutes() {
@@ -20,54 +28,22 @@ export default function AppRoutes() {
       <Route path="/register" element={<RegisterPage />} />
 
       {/* Employee routes */}
-      <Route
-        path="/employee/dashboard"
-        element={
-          <ProtectedRoute allowedRole="Employee">
-            <EmployeeDashboard />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/employee/my-assets"
-        element={
-          <ProtectedRoute allowedRole="Employee">
-            <MyAssetsPage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/employee/service-requests"
-        element={
-          <ProtectedRoute allowedRole="Employee">
-            <ServiceRequestPage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/employee/audits"
-        element={
-          <ProtectedRoute allowedRole="Employee">
-            <AuditPage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/employee/return-requests"
-        element={
-          <ProtectedRoute allowedRole="Employee">
-            <ReturnRequestPage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/employee/request-asset/:id"
-        element={
-          <ProtectedRoute allowedRole="Employee">
-            <RequestAssetPage />
-          </ProtectedRoute>
-        }
-      />
+      <Route path="/employee/dashboard" element={<ProtectedRoute allowedRole="Employee"><EmployeeDashboard /></ProtectedRoute>} />
+      <Route path="/employee/my-assets" element={<ProtectedRoute allowedRole="Employee"><MyAssetsPage /></ProtectedRoute>} />
+      <Route path="/employee/service-requests" element={<ProtectedRoute allowedRole="Employee"><ServiceRequestPage /></ProtectedRoute>} />
+      <Route path="/employee/audits" element={<ProtectedRoute allowedRole="Employee"><AuditPage /></ProtectedRoute>} />
+      <Route path="/employee/return-requests" element={<ProtectedRoute allowedRole="Employee"><ReturnRequestPage /></ProtectedRoute>} />
+      <Route path="/employee/request-asset/:id" element={<ProtectedRoute allowedRole="Employee"><RequestAssetPage /></ProtectedRoute>} />
+
+      {/* Admin routes */}
+      <Route path="/admin/dashboard" element={<ProtectedRoute allowedRole="Admin"><AdminDashboard /></ProtectedRoute>} />
+      <Route path="/admin/assets" element={<ProtectedRoute allowedRole="Admin"><AssetManagementPage /></ProtectedRoute>} />
+      <Route path="/admin/categories" element={<ProtectedRoute allowedRole="Admin"><CategoryManagementPage /></ProtectedRoute>} />
+      <Route path="/admin/employees" element={<ProtectedRoute allowedRole="Admin"><EmployeeManagementPage /></ProtectedRoute>} />
+      <Route path="/admin/allocations" element={<ProtectedRoute allowedRole="Admin"><AllocationManagementPage /></ProtectedRoute>} />
+      <Route path="/admin/service-requests" element={<ProtectedRoute allowedRole="Admin"><ServiceRequestManagementPage /></ProtectedRoute>} />
+      <Route path="/admin/audits" element={<ProtectedRoute allowedRole="Admin"><AuditManagementPage /></ProtectedRoute>} />
+      <Route path="/admin/return-requests" element={<ProtectedRoute allowedRole="Admin"><ReturnRequestManagementPage /></ProtectedRoute>} />
 
       {/* Default redirect */}
       <Route
@@ -90,15 +66,8 @@ export default function AppRoutes() {
           <div className="d-flex justify-content-center align-items-center vh-100">
             <div className="text-center">
               <h2 className="text-danger">Access Denied</h2>
-              <p className="text-muted">
-                You don't have permission to access this page.
-              </p>
-              <button
-                className="btn btn-primary"
-                onClick={() => window.history.back()}
-              >
-                Go Back
-              </button>
+              <p className="text-muted">You don't have permission to access this page.</p>
+              <button className="btn btn-primary" onClick={() => window.history.back()}>Go Back</button>
             </div>
           </div>
         }
