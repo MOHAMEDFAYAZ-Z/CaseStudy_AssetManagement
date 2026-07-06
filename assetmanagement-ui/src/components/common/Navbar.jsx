@@ -65,6 +65,11 @@ export default function Navbar() {
                     Audits
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link className={`nav-link ${isActive("/employee/return-requests")}`} to="/employee/return-requests">
+                  Returns
+                  </Link>
+                </li>
               </>
             )}
 
@@ -103,6 +108,11 @@ export default function Navbar() {
                 <li className="nav-item">
                   <Link className={`nav-link ${isActive("/admin/audits")}`} to="/admin/audits">
                     Audits
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className={`nav-link ${isActive("/admin/return-requests")}`} to="/admin/return-requests">
+                    Returns
                   </Link>
                 </li>
               </>
