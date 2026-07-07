@@ -60,6 +60,7 @@ namespace AssetManagement.Infrastructure.Repositories
                     .Select(a => new AllocationResponseDTO
                     {
                         AllocationId = a.AllocationId,
+                        AssetId = a.Asset.AssetId,
                         AssetName = a.Asset.AssetName,
                         AssetNo = a.Asset.AssetNo,
                         EmployeeName = a.User.Name,
@@ -86,6 +87,7 @@ namespace AssetManagement.Infrastructure.Repositories
                     .Select(a => new AllocationResponseDTO
                     {
                         AllocationId = a.AllocationId,
+                        AssetId = a.Asset.AssetId,
                         AssetName = a.Asset.AssetName,
                         AssetNo = a.Asset.AssetNo,
                         EmployeeName = a.User.Name,
@@ -145,6 +147,7 @@ namespace AssetManagement.Infrastructure.Repositories
                 return new AllocationResponseDTO
                 {
                     AllocationId = allocation.AllocationId,
+                    AssetId = allocation.Asset.AssetId,
                     AssetName = allocation.Asset.AssetName,
                     AssetNo = allocation.Asset.AssetNo,
                     EmployeeName = allocation.User.Name,

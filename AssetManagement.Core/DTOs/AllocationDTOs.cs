@@ -11,6 +11,7 @@ namespace AssetManagement.Core.DTOs
     public class AllocationResponseDTO
     {
         public int AllocationId { get; set; }
+        public int AssetId { get; set; }
         public string AssetName { get; set; } = string.Empty;
         public string AssetNo { get; set; } = string.Empty;
         public string EmployeeName { get; set; } = string.Empty;
