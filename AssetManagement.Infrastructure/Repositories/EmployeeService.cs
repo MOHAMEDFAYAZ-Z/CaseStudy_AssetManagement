@@ -107,6 +107,42 @@ namespace AssetManagement.Infrastructure.Repositories
                 if (user == null)
                     throw new NotFoundException("Employee not found.");
 
+                // Get all active allocations for this employee
+                var activeAllocations = await _context.AssetAllocations
+                    .Include(a => a.Asset)
+                    .Where(a => a.UserId == id && a.Status == "Active")
+                    .ToListAsync();
+
+                // Set all allocated assets back to Available
+                foreach (var allocation in activeAllocations)
+                {
+                    allocation.Status = "Returned";
+                    allocation.ReturnedDate = DateTime.Now;
+                    allocation.Asset.Status = "Available";
+                }
+
+                // Cancel pending service requests
+                var pendingServiceRequests = await _context.ServiceRequests
+                    .Where(s => s.UserId == id && s.Status == "Pending")
+                    .ToListAsync();
+
+                foreach (var serviceRequest in pendingServiceRequests)
+                {
+                    serviceRequest.Status = "Cancelled";
+                }
+
+                // Cancel pending return requests
+                var pendingReturnRequests = await _context.AssetReturnRequests
+                    .Where(r => r.UserId == id && r.Status == "Pending")
+                    .ToListAsync();
+
+                foreach (var returnRequest in pendingReturnRequests)
+                {
+                    returnRequest.Status = "Cancelled";
+                }
+
+                await _context.SaveChangesAsync();
+
                 _context.Users.Remove(user);
                 await _context.SaveChangesAsync();
 
