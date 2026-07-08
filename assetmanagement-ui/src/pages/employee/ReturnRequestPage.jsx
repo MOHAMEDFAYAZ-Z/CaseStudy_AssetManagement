@@ -4,6 +4,7 @@ import Loader from "../../components/common/Loader";
 import StatusBadge from "../../components/common/StatusBadge";
 import { getMyReturnRequests } from "../../api/returnRequestApi";
 import { MdKeyboardReturn } from "react-icons/md";
+import AssetImage from "../../components/common/AssetImage";
 
 export default function ReturnRequestPage() {
   const [returnRequests, setReturnRequests] = useState([]);
@@ -64,6 +65,7 @@ export default function ReturnRequestPage() {
                 <thead>
                   <tr>
                     <th>Asset No</th>
+                    <th>Image</th>
                     <th>Asset Name</th>
                     <th>Reason</th>
                     <th>Status</th>
@@ -78,6 +80,9 @@ export default function ReturnRequestPage() {
                         <span style={{ fontFamily: "monospace", background: "#f3f4f6", padding: "2px 8px", borderRadius: "6px", fontSize: "0.82rem" }}>
                           {req.assetNo}
                         </span>
+                      </td>
+                      <td>
+                        <AssetImage imageUrl={req.imageUrl} assetName={req.assetName} />
                       </td>
                       <td style={{ fontWeight: 600 }}>{req.assetName}</td>
                       <td style={{ color: "#6b7280", maxWidth: "200px" }}>

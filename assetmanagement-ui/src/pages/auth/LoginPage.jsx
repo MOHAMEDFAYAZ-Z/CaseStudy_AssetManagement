@@ -142,14 +142,14 @@ export default function LoginPage() {
             </div>
 
             {/* Forgot Password */}
-            <div className="mb-4 text-end">
+            {/* <div className="mb-4 text-end">
               <Link
                 to="/forgot-password"
                 style={{ color: "#1a73e8", fontSize: "0.9rem", textDecoration: "none", fontWeight: 500 }}
               >
                 Forgot Password?
               </Link>
-            </div>
+            </div> */}
 
             {/* Submit */}
             <button
