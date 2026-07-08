@@ -19,6 +19,7 @@ import {
   MdArrowForward,
 } from "react-icons/md";
 import StatusBadge from "../../components/common/StatusBadge";
+import AssetImage from "../../components/common/AssetImage";
 
 export default function AdminDashboard() {
   const { name } = useAuth();
@@ -210,6 +211,7 @@ export default function AdminDashboard() {
                         <thead>
                           <tr>
                             <th>Employee</th>
+                            <th>Image</th>
                             <th>Asset</th>
                             <th>Status</th>
                           </tr>
@@ -220,6 +222,7 @@ export default function AdminDashboard() {
                               <td style={{ fontWeight: 500 }}>
                                 {a.employeeName}
                               </td>
+                              <td><AssetImage imageUrl={a.imageUrl} assetName={a.assetName} size={36} /></td>
                               <td style={{ color: "#6b7280" }}>
                                 {a.assetName}
                               </td>
@@ -258,6 +261,7 @@ export default function AdminDashboard() {
                         <thead>
                           <tr>
                             <th>Employee</th>
+                            <th>Image</th>
                             <th>Asset</th>
                             <th>Status</th>
                           </tr>
@@ -268,6 +272,7 @@ export default function AdminDashboard() {
                               <td style={{ fontWeight: 500 }}>
                                 {s.employeeName}
                               </td>
+                              <td><AssetImage imageUrl={s.imageUrl} assetName={s.assetName} size={36} /></td>
                               <td style={{ color: "#6b7280" }}>
                                 {s.assetName}
                               </td>

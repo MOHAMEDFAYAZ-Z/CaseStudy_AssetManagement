@@ -93,6 +93,17 @@ export default function RequestAssetPage() {
                     <label className="form-label text-muted">Asset Name</label>
                     <p style={{ fontWeight: 700, fontSize: "1.1rem" }}>{asset.assetName}</p>
                   </div>
+                  {asset.imageUrl && (
+                    <div className="col-md-12">
+                      <label className="form-label text-muted">Asset Image</label>
+                      <img
+                        src={asset.imageUrl}
+                        alt={asset.assetName}
+                        style={{ width: "200px", height: "150px", objectFit: "cover", borderRadius: "12px", display: "block" }}
+                        onError={(e) => e.target.style.display = "none"}
+                      />
+                    </div>
+                  )}
                   <div className="col-md-6">
                     <label className="form-label text-muted">Model</label>
                     <p>{asset.assetModel}</p>

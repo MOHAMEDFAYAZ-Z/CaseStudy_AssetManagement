@@ -13,6 +13,7 @@ namespace AssetManagement.Core.Models
         public DateTime ExpiryDate { get; set; }
         public decimal AssetValue { get; set; }
         public string Status { get; set; } = "Available";
+        public string ImageUrl { get; set; } = string.Empty;
 
         public int CategoryId { get; set; }
         public AssetCategory Category { get; set; } = null!;

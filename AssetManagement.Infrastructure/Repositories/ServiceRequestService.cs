@@ -69,6 +69,7 @@ namespace AssetManagement.Infrastructure.Repositories
                     {
                         ServiceId = s.ServiceId,
                         AssetNo = s.AssetNo,
+                        ImageUrl = s.Asset.ImageUrl,
                         AssetName = s.Asset.AssetName,
                         Description = s.Description,
                         IssueType = s.IssueType,
@@ -95,6 +96,7 @@ namespace AssetManagement.Infrastructure.Repositories
                     {
                         ServiceId = s.ServiceId,
                         AssetNo = s.AssetNo,
+                        ImageUrl = s.Asset.ImageUrl,
                         AssetName = s.Asset.AssetName,
                         Description = s.Description,
                         IssueType = s.IssueType,
@@ -151,6 +153,7 @@ namespace AssetManagement.Infrastructure.Repositories
                 {
                     ServiceId = serviceRequest.ServiceId,
                     AssetNo = serviceRequest.AssetNo,
+                    ImageUrl = serviceRequest.Asset.ImageUrl,
                     AssetName = serviceRequest.Asset.AssetName,
                     Description = serviceRequest.Description,
                     IssueType = serviceRequest.IssueType,

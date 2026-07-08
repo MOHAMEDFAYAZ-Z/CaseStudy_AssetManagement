@@ -4,6 +4,7 @@ import Loader from "../../components/common/Loader";
 import StatusBadge from "../../components/common/StatusBadge";
 import { getAllAllocations, updateAllocationStatus } from "../../api/allocationApi";
 import { MdAssignment } from "react-icons/md";
+import AssetImage from "../../components/common/AssetImage";
 
 export default function AllocationManagementPage() {
   const [allocations, setAllocations] = useState([]);
@@ -81,6 +82,7 @@ export default function AllocationManagementPage() {
                   <tr>
                     <th>Employee</th>
                     <th>Email</th>
+                    <th>Image</th>
                     <th>Asset</th>
                     <th>Asset No</th>
                     <th>Allocated Date</th>
@@ -98,6 +100,7 @@ export default function AllocationManagementPage() {
                       <td style={{ color: "#6b7280" }}>
                         {allocation.employeeEmail}
                       </td>
+                      <td><AssetImage imageUrl={allocation.imageUrl} assetName={allocation.assetName} /></td>
                       <td>{allocation.assetName}</td>
                       <td>
                         <span style={{ fontFamily: "monospace", background: "#f3f4f6", padding: "2px 8px", borderRadius: "6px", fontSize: "0.82rem" }}>

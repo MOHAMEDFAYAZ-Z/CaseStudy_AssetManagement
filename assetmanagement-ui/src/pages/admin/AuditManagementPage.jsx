@@ -5,6 +5,8 @@ import StatusBadge from "../../components/common/StatusBadge";
 import { getAllAudits, sendAuditToAll } from "../../api/auditApi";
 import { MdVerified, MdSend } from "react-icons/md";
 import { FiClipboard } from "react-icons/fi";
+import AssetImage from "../../components/common/AssetImage";
+
 
 export default function AuditManagementPage() {
   const [audits, setAudits] = useState([]);
@@ -147,6 +149,7 @@ export default function AuditManagementPage() {
                   <tr>
                     <th>Employee</th>
                     <th>Asset No</th>
+                    <th>Image</th>
                     <th>Asset Name</th>
                     <th>Sent At</th>
                     <th>Status</th>
@@ -162,6 +165,7 @@ export default function AuditManagementPage() {
                           {audit.assetNo}
                         </span>
                       </td>
+                      <td><AssetImage imageUrl={audit.imageUrl} assetName={audit.assetName} /></td>
                       <td>{audit.assetName}</td>
                       <td>{new Date(audit.sentAt).toLocaleDateString()}</td>
                       <td>

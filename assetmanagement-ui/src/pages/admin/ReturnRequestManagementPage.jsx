@@ -7,6 +7,7 @@ import {
   updateReturnRequestStatus,
 } from "../../api/returnRequestApi";
 import { MdKeyboardReturn } from "react-icons/md";
+import AssetImage from "../../components/common/AssetImage";
 
 export default function ReturnRequestManagementPage() {
   const [returnRequests, setReturnRequests] = useState([]);
@@ -84,6 +85,7 @@ export default function ReturnRequestManagementPage() {
                   <tr>
                     <th>Employee</th>
                     <th>Asset No</th>
+                    <th>Image</th>
                     <th>Asset Name</th>
                     <th>Reason</th>
                     <th>Requested At</th>
@@ -100,6 +102,7 @@ export default function ReturnRequestManagementPage() {
                           {req.assetNo}
                         </span>
                       </td>
+                      <td><AssetImage imageUrl={req.imageUrl} assetName={req.assetName} /></td>
                       <td>{req.assetName}</td>
                       <td style={{ color: "#6b7280", maxWidth: "180px" }}>
                         {req.reason}

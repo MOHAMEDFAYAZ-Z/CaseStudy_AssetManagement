@@ -11,6 +11,7 @@ import {
 } from "../../api/assetApi";
 import { getAllCategories } from "../../api/categoryApi";
 import { MdInventory, MdEdit, MdDelete, MdAdd } from "react-icons/md";
+import AssetImage from "../../components/common/AssetImage";
 
 export default function AssetManagementPage() {
   const [assets, setAssets] = useState([]);
@@ -70,6 +71,7 @@ export default function AssetManagementPage() {
       categories.find((c) => c.categoryName === asset.categoryName)?.categoryId
     );
     setValue("status", asset.status);
+    setValue("imageUrl", asset.imageUrl || "");
   }
 
   function handleCancel() {
@@ -92,6 +94,7 @@ export default function AssetManagementPage() {
           assetValue: Number(data.assetValue),
           categoryId: Number(data.categoryId),
           status: data.status,
+          imageUrl: data.imageUrl || "",
         });
         setSuccessMessage("Asset updated successfully!");
       } else {
@@ -103,6 +106,7 @@ export default function AssetManagementPage() {
           expiryDate: data.expiryDate,
           assetValue: Number(data.assetValue),
           categoryId: Number(data.categoryId),
+          imageUrl: data.imageUrl || "",
         });
         setSuccessMessage("Asset created successfully!");
       }
@@ -267,6 +271,16 @@ export default function AssetManagementPage() {
                 </div>
 
                 <div className="col-md-4">
+                  <label className="form-label">Image URL (optional)</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="https://example.com/image.jpg"
+                    {...register("imageUrl")}
+                  />
+                </div>
+
+                <div className="col-md-4">
                   <label className="form-label">Manufacturing Date</label>
                   <input
                     type="date"
@@ -360,6 +374,7 @@ export default function AssetManagementPage() {
                 <thead>
                   <tr>
                     <th>Asset No</th>
+                    <th>Image</th>
                     <th>Asset Name</th>
                     <th>Model</th>
                     <th>Category</th>
@@ -376,6 +391,7 @@ export default function AssetManagementPage() {
                           {asset.assetNo}
                         </span>
                       </td>
+                      <td><AssetImage imageUrl={asset.imageUrl} assetName={asset.assetName} /></td>
                       <td style={{ fontWeight: 600 }}>{asset.assetName}</td>
                       <td style={{ color: "#6b7280" }}>{asset.assetModel}</td>
                       <td>

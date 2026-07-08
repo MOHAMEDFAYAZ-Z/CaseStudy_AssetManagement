@@ -8,6 +8,7 @@ import { createReturnRequest } from "../../api/returnRequestApi";
 import { createServiceRequest } from "../../api/serviceRequestApi";
 import { MdAssignment, MdBuild, MdKeyboardReturn } from "react-icons/md";
 import { useForm } from "react-hook-form";
+import AssetImage from "../../components/common/AssetImage";
 
 export default function MyAssetsPage() {
   const { name } = useAuth();
@@ -235,6 +236,7 @@ export default function MyAssetsPage() {
                 <thead>
                   <tr>
                     <th>Asset No</th>
+                    <th>Image</th>
                     <th>Asset Name</th>
                     <th>Allocated Date</th>
                     <th>Status</th>
@@ -248,6 +250,9 @@ export default function MyAssetsPage() {
                         <span style={{ fontFamily: "monospace", background: "#f3f4f6", padding: "2px 8px", borderRadius: "6px", fontSize: "0.82rem" }}>
                           {allocation.assetNo}
                         </span>
+                      </td>
+                      <td>
+                        <AssetImage imageUrl={allocation.imageUrl} assetName={allocation.assetName} />
                       </td>
                       <td style={{ fontWeight: 600 }}>{allocation.assetName}</td>
                       <td>{new Date(allocation.allocatedDate).toLocaleDateString()}</td>

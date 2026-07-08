@@ -4,6 +4,7 @@ import Loader from "../../components/common/Loader";
 import StatusBadge from "../../components/common/StatusBadge";
 import { getMyServiceRequests } from "../../api/serviceRequestApi";
 import { MdBuild } from "react-icons/md";
+import AssetImage from "../../components/common/AssetImage";
 
 export default function ServiceRequestPage() {
   const [serviceRequests, setServiceRequests] = useState([]);
@@ -64,6 +65,7 @@ export default function ServiceRequestPage() {
                 <thead>
                   <tr>
                     <th>Asset No</th>
+                    <th>Image</th>
                     <th>Asset Name</th>
                     <th>Issue Type</th>
                     <th>Description</th>
@@ -78,6 +80,9 @@ export default function ServiceRequestPage() {
                         <span style={{ fontFamily: "monospace", background: "#f3f4f6", padding: "2px 8px", borderRadius: "6px", fontSize: "0.82rem" }}>
                           {req.assetNo}
                         </span>
+                      </td>
+                      <td>
+                        <AssetImage imageUrl={req.imageUrl} assetName={req.assetName} />
                       </td>
                       <td style={{ fontWeight: 600 }}>{req.assetName}</td>
                       <td>

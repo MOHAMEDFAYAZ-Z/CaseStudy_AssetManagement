@@ -72,6 +72,20 @@ export default function AppRoutes() {
           </div>
         }
       />
+
+      {/* Catch all invalid routes */}
+      <Route
+        path="*"
+        element={
+          !token ? (
+            <Navigate to="/login" />
+          ) : role === "Admin" ? (
+            <Navigate to="/admin/dashboard" />
+          ) : (
+            <Navigate to="/employee/dashboard" />
+          )
+        }
+      />
     </Routes>
   );
 }

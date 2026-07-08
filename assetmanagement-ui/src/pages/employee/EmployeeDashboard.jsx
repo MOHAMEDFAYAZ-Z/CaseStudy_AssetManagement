@@ -280,6 +280,7 @@ export default function EmployeeDashboard() {
                 <thead>
                   <tr>
                     <th>Asset No</th>
+                    <th>Image</th>
                     <th>Asset Name</th>
                     <th>Model</th>
                     <th>Category</th>
@@ -295,6 +296,20 @@ export default function EmployeeDashboard() {
                         <span style={{ fontFamily: "monospace", background: "#f3f4f6", padding: "2px 8px", borderRadius: "6px", fontSize: "0.82rem" }}>
                           {asset.assetNo}
                         </span>
+                      </td>
+                      <td>
+                        {asset.imageUrl ? (
+                          <img
+                            src={asset.imageUrl}
+                            alt={asset.assetName}
+                            style={{ width: "48px", height: "48px", objectFit: "cover", borderRadius: "8px" }}
+                            onError={(e) => e.target.style.display = "none"}
+                          />
+                        ) : (
+                          <div style={{ width: "48px", height: "48px", background: "#f3f4f6", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <MdInventory color="#9ca3af" />
+                          </div>
+                        )}
                       </td>
                       <td style={{ fontWeight: 600 }}>{asset.assetName}</td>
                       <td style={{ color: "#6b7280" }}>{asset.assetModel}</td>

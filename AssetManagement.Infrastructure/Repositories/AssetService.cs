@@ -32,7 +32,8 @@ namespace AssetManagement.Infrastructure.Repositories
                         ExpiryDate = a.ExpiryDate,
                         AssetValue = a.AssetValue,
                         Status = a.Status,
-                        CategoryName = a.Category.CategoryName
+                        CategoryName = a.Category.CategoryName,
+                        ImageUrl = a.ImageUrl
                     }).ToListAsync();
             }
             catch (Exception ex)
@@ -62,7 +63,8 @@ namespace AssetManagement.Infrastructure.Repositories
                     ExpiryDate = asset.ExpiryDate,
                     AssetValue = asset.AssetValue,
                     Status = asset.Status,
-                    CategoryName = asset.Category.CategoryName
+                    CategoryName = asset.Category.CategoryName,
+                    ImageUrl = asset.ImageUrl
                 };
             }
             catch (Exception ex)
@@ -90,7 +92,8 @@ namespace AssetManagement.Infrastructure.Repositories
                     ExpiryDate = createAssetDTO.ExpiryDate,
                     AssetValue = createAssetDTO.AssetValue,
                     CategoryId = createAssetDTO.CategoryId,
-                    Status = "Available"
+                    Status = "Available",
+                    ImageUrl = createAssetDTO.ImageUrl
                 };
 
                 _context.Assets.Add(asset);
@@ -120,6 +123,7 @@ namespace AssetManagement.Infrastructure.Repositories
                 asset.AssetValue = updateAssetDTO.AssetValue;
                 asset.CategoryId = updateAssetDTO.CategoryId;
                 asset.Status = updateAssetDTO.Status;
+                asset.ImageUrl = updateAssetDTO.ImageUrl;
 
                 await _context.SaveChangesAsync();
 
@@ -176,7 +180,8 @@ namespace AssetManagement.Infrastructure.Repositories
                     ExpiryDate = a.ExpiryDate,
                     AssetValue = a.AssetValue,
                     Status = a.Status,
-                    CategoryName = a.Category.CategoryName
+                    CategoryName = a.Category.CategoryName,
+                    ImageUrl = a.ImageUrl
                 }).ToListAsync();
             }
             catch (Exception ex)
@@ -208,7 +213,8 @@ namespace AssetManagement.Infrastructure.Repositories
                         ExpiryDate = a.ExpiryDate,
                         AssetValue = a.AssetValue,
                         Status = a.Status,
-                        CategoryName = a.Category.CategoryName
+                        CategoryName = a.Category.CategoryName,
+                        ImageUrl = a.ImageUrl
                     }).ToListAsync();
 
                 var totalPages = (int)Math.Ceiling(totalCount / (double)paginationParams.PageSize);

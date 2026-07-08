@@ -7,6 +7,7 @@ import {
   updateServiceRequestStatus,
 } from "../../api/serviceRequestApi";
 import { MdBuild } from "react-icons/md";
+import AssetImage from "../../components/common/AssetImage";
 
 export default function ServiceRequestManagementPage() {
   const [serviceRequests, setServiceRequests] = useState([]);
@@ -84,6 +85,7 @@ export default function ServiceRequestManagementPage() {
                   <tr>
                     <th>Employee</th>
                     <th>Asset No</th>
+                    <th>Image</th>
                     <th>Asset Name</th>
                     <th>Issue Type</th>
                     <th>Description</th>
@@ -101,6 +103,7 @@ export default function ServiceRequestManagementPage() {
                           {req.assetNo}
                         </span>
                       </td>
+                      <td><AssetImage imageUrl={req.imageUrl} assetName={req.assetName} /></td>
                       <td>{req.assetName}</td>
                       <td>
                         <span style={{ background: "#fef3c7", color: "#92400e", padding: "3px 10px", borderRadius: "20px", fontSize: "0.78rem", fontWeight: 600 }}>

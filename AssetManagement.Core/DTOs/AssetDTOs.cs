@@ -25,6 +25,7 @@ namespace AssetManagement.Core.DTOs
 
         [Required(ErrorMessage = "Category is required.")]
         public int CategoryId { get; set; }
+        public string ImageUrl { get; set; } = string.Empty;
     }
 
     public class UpdateAssetDTO
@@ -43,6 +44,7 @@ namespace AssetManagement.Core.DTOs
 
         public int CategoryId { get; set; }
         public string Status { get; set; } = string.Empty;
+        public string ImageUrl { get; set; } = string.Empty;
     }
 
     public class AssetResponseDTO
@@ -56,5 +58,6 @@ namespace AssetManagement.Core.DTOs
         public decimal AssetValue { get; set; }
         public string Status { get; set; } = string.Empty;
         public string CategoryName { get; set; } = string.Empty;
+        public string ImageUrl { get; set; } = string.Empty;
     }
 }

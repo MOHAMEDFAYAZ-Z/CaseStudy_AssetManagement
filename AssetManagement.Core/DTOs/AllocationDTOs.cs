@@ -14,6 +14,7 @@ namespace AssetManagement.Core.DTOs
         public int AssetId { get; set; }
         public string AssetName { get; set; } = string.Empty;
         public string AssetNo { get; set; } = string.Empty;
+        public string ImageUrl { get; set; } = string.Empty;
         public string EmployeeName { get; set; } = string.Empty;
         public string EmployeeEmail { get; set; } = string.Empty;
         public DateTime AllocatedDate { get; set; }

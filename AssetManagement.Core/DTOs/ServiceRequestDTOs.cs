@@ -21,6 +21,7 @@ namespace AssetManagement.Core.DTOs
         public int ServiceId { get; set; }
         public string AssetNo { get; set; } = string.Empty;
         public string AssetName { get; set; } = string.Empty;
+        public string ImageUrl { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string IssueType { get; set; } = string.Empty;
         public string Status { get; set; } = string.Empty;
