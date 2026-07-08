@@ -21,7 +21,7 @@ export default function Navbar() {
   }
 
   function isActive(path) {
-    return location.pathname === path ? "active" : "";
+    return location.pathname.startsWith(path) ? "active" : "";
   }
 
   return (

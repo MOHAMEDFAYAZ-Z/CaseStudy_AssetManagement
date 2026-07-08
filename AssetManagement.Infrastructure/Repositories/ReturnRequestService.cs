@@ -34,6 +34,15 @@ namespace AssetManagement.Infrastructure.Repositories
                 if (allocation == null)
                     throw new BadRequestException("No active allocation found for this asset.");
 
+                // Check if return request already exists
+                var existingReturn = await _context.AssetReturnRequests
+                    .FirstOrDefaultAsync(r => r.AssetId == dto.AssetId
+                        && r.UserId == userId
+                        && r.Status == "Pending");
+
+                if (existingReturn != null)
+                    throw new BadRequestException("You already have a pending return request for this asset.");
+
                 var returnRequest = new AssetReturnRequest
                 {
                     AssetId = dto.AssetId,

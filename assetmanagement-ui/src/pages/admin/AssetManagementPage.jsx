@@ -26,6 +26,7 @@ export default function AssetManagementPage() {
     handleSubmit,
     reset,
     setValue,
+    watch, 
     formState: { errors },
   } = useForm();
 
@@ -288,6 +289,13 @@ export default function AssetManagementPage() {
                     className={`form-control ${errors.expiryDate ? "is-invalid" : ""}`}
                     {...register("expiryDate", {
                       required: "Expiry date is required.",
+                      validate: (value) => {
+                        const manufDate = watch("manufacturingDate");
+                        if (manufDate && value <= manufDate) {
+                          return "Expiry date must be after manufacturing date.";
+                        }
+                        return true;
+                      },
                     })}
                   />
                   {errors.expiryDate && (

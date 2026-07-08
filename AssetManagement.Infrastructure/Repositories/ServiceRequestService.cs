@@ -26,6 +26,14 @@ namespace AssetManagement.Infrastructure.Repositories
                 if (asset == null)
                     throw new NotFoundException("Asset not found.");
 
+                // Check if asset already has pending service request
+                var existingRequest = await _context.ServiceRequests
+                    .FirstOrDefaultAsync(s => s.AssetNo == dto.AssetNo
+                        && s.Status == "Pending" || s.Status == "InProgress");
+
+                if (existingRequest != null)
+                    throw new BadRequestException("Asset already has an active service request.");
+
                 var serviceRequest = new ServiceRequest
                 {
                     AssetNo = dto.AssetNo,
