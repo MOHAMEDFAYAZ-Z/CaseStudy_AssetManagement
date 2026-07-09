@@ -21,13 +21,13 @@ jobs:
         dotnet-version: '10.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore AssetManagement/AssetManagement.sln
+      run: dotnet restore AssetManagement.slnx
 
     - name: Build solution
-      run: dotnet build AssetManagement/AssetManagement.sln --no-restore --configuration Release
+      run: dotnet build AssetManagement.slnx --no-restore --configuration Release
 
     - name: Run unit tests
-      run: dotnet test AssetManagement/AssetManagement.Tests/AssetManagement.Tests.csproj --no-restore --verbosity normal
+      run: dotnet test AssetManagement.Tests/AssetManagement.Tests.csproj --no-restore --verbosity normal
 
   frontend-build:
     name: Frontend Build
@@ -44,10 +44,10 @@ jobs:
 
     - name: Install dependencies
       run: |
-        cd asset-management-ui
+        cd assetmanagement-ui
         npm install
 
     - name: Build frontend
       run: |
-        cd asset-management-ui
+        cd assetmanagement-ui
         npm run build
