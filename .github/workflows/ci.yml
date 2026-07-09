@@ -1,0 +1,53 @@
+name: Asset Management CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  backend-build-and-test:
+    name: Backend Build & Test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '10.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore AssetManagement/AssetManagement.sln
+
+    - name: Build solution
+      run: dotnet build AssetManagement/AssetManagement.sln --no-restore --configuration Release
+
+    - name: Run unit tests
+      run: dotnet test AssetManagement/AssetManagement.Tests/AssetManagement.Tests.csproj --no-restore --verbosity normal
+
+  frontend-build:
+    name: Frontend Build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20.x'
+
+    - name: Install dependencies
+      run: |
+        cd asset-management-ui
+        npm install
+
+    - name: Build frontend
+      run: |
+        cd asset-management-ui
+        npm run build
